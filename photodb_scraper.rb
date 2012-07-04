@@ -1,9 +1,7 @@
 require "rubygems"
 require "mechanize"
 
-agent = Mechanize.new do |a|
-    a.user_agent_alias = 'Mac Safari'
-end
+agent = Mechanize.new
 
 page = agent.get("http://laiac1b5z1-int.latimes.com/")
 
