@@ -34,37 +34,15 @@ a.page.search("td:nth-child(3) a").each do |link|
     puts
 end
 
-
-
-
-
-
-
-# THE DREAM
-# http://laiac1b5z1-int.latimes.com/images?content_partial=global%2Fcontent_list&filter_by=title&filter_status=all&filter_val=&limit=1000&offset=20&search_published=false&sort_asc=desc&sort_by=modified
-
-
-
-
-
-
-
-
-
-# Click on first link
-# a.page.link_with(:text => "Sarah Roemer plays catch with her dogs on the set of \"The Event\"").click
-
-# Possiblility for iteration:
-# a.page.links_with(:class => 'td:nth-child(3) a').each do |e| ....
-
-# next page CSS "#paging_content a"
-
-# Grab Descriptions, remove whitespace, store in variable photo_info and write to photo.txt
-#photo_info = a.page.search("#image_description , #image_caption, #image_title").map(&:text).map(&:strip)
 #File.open("photos.txt", 'w'){|file| file.write(photo_info)}
-
-
 
 # Open single photo page and save photo
 #a.page.links[8].click
 
+
+
+
+#uri = page.links[18].uri.to_s #gets the url
+#uri = uri[15..uri.index('&')-1]
+
+#agent.get(uri).save_as((File.basename(uri)).split("?")[0]) # saves the picture to script's directory
