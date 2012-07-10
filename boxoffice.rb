@@ -41,3 +41,6 @@ box_office_date = a.page.search("font:nth-child(4) div").text
 p "Saving everything to box_office.txt"
 File.open("box_office_#{box_office_date}.txt", 'w'){|f| f.write(final)}
 p "Done!"
+# Only works for Mac OS X and Linux
+p "Kicking open the directory..."
+%x{ open . }
