@@ -1,7 +1,6 @@
 require "rubygems"
 require "mechanize"
 require "google_chart"
-# require "pdf-reader"
 
 # Initialize new Mechanize class
 a = Mechanize.new
@@ -26,9 +25,25 @@ a.page.links[26].click
 # Setting the HTML view as variable for readability when GET'ing it.
 html_view = a.page.link_with(:text=> "View as HTML").href
 
-# Opening up the HTML view
+# Opening up the HTML view of PDF
 p "Opening HTML view of box office attachment..."
 a.get("http://mail.google.com" + html_view)
+
+# Grab data from PDF
+
+
+
+
+chart = GoogleChart::LineChart.new('500x600', "Line Chart", false)
+
+
+
+
+
+
+
+
+
 
 # Now we're presented with html table. Time to scrape and save?
 final = a.page.search("html").map(&:text).map(&:strip)
