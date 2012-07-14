@@ -18,7 +18,7 @@ x.submit
 # We should now be in the inbox. In the basic HTML view, the first email is usually the 25th indexed link item. So, let's find it and click it.
 p "Hopping in the first email..."
 # a.page.links[25].click
-a.page.links[26].click
+a.page.links[25].click
 
 
 # Now in the email body
@@ -31,6 +31,13 @@ a.get("http://mail.google.com" + html_view)
 
 # Grab data from PDF
 
+# Grab each "p" element, iterate and print. Start at first movie - 5th indexed item
+
+a.page.search("p")[5..-3].each do |m|
+    # only removes first occurance
+    # puts m.text.gsub(/=/,'') removes all, but editor doesn't like
+    puts m.text.gsub(/^=/,'')
+end
 
 
 
@@ -42,7 +49,9 @@ chart = GoogleChart::LineChart.new('500x600', "Line Chart", false)
 
 
 
-
+# Print first Excel row
+# This is 'Amazing Spiderman' and it's values
+# a.page.search("p")[5].text
 
 
 # Now we're presented with html table. Time to scrape and save?
