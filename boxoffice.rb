@@ -32,12 +32,24 @@ a.get("http://mail.google.com" + html_view)
 # Grab data from PDF
 
 # Grab each "p" element, iterate and print. Start at first movie - 5th indexed item
-
-a.page.search("p")[5..-3].each do |m|
+movies = a.page.search("p")[5..-3]
+movies.each do |m|
     # only removes first occurance
     # puts m.text.gsub(/=/,'') removes all, but editor doesn't like
-    puts m.text.gsub(/^=/,'')
+    #.gsub! /\s+/, '' <-- remove whitespace
+    #n = m.text.split(/[=]/)
+    #title = n[1]
+    #puts title
+    @my_movie = m.text
 end
+
+# movies.each{ |m| puts m.text}
+
+# Store everything in a variable called movies
+# movies = a.page.search("p")[5..-3]
+
+# Split string by =
+# s = a.page.search("p")[5].text.split(/[=]/)
 
 
 
