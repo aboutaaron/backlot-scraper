@@ -31,7 +31,7 @@ puts
 a.get("http://laiac1b5z1-int.latimes.com/images?content_partial=global%2Fcontent_list&filter_by=title&filter_status=all&filter_val=&limit=1000&offset=20&search_published=false&sort_asc=desc&sort_by=modified")
 
 #p "Change Directory"
-#Dir.chdir("images/")
+
 
 # Boom
 p "Iterating through links..."
@@ -55,5 +55,7 @@ a.page.search("td:nth-child(3) a").each do |link|
     img_url = a.page.search("img")[0].attributes['src'].text
 
     # Change to Images Directory and download file
-    a.get(base_url+img_url).save
+    Dir.chdir("images") do
+        a.get(base_url+img_url).save
+    end
 end
