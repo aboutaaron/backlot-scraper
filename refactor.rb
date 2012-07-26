@@ -6,9 +6,9 @@ require "fileutils"
 # Files
 IMAGES = "images"
 Dir.mkdir(IMAGES) unless File.exists?(IMAGES)
+File.open("captions.txt", "w"){ |somefile| somefile.puts "TOP"}
 
-#CAPTIONS ="captions.txt"
-#File.open("captions.txt", "w"){ |captions| captions.puts "## Captions" } unless File.exists?(CAPTIONS)
+
 
 # Structure
 base_url = "http://laiac1b5z1-int.latimes.com"
@@ -30,9 +30,6 @@ puts
 # URL with maximum photo size
 a.get("http://laiac1b5z1-int.latimes.com/images?content_partial=global%2Fcontent_list&filter_by=title&filter_status=all&filter_val=&limit=1000&offset=20&search_published=false&sort_asc=desc&sort_by=modified")
 
-#p "Change Directory"
-
-
 # Boom
 p "Iterating through links..."
 a.page.search("td:nth-child(3) a").each do |link|
@@ -42,11 +39,14 @@ a.page.search("td:nth-child(3) a").each do |link|
     puts
     a.get(image_page)
     # Grab Descriptions, remove whitespace, store in variable photo_info and write to photo.txt
-    #photo_info = a.page.search("#image_description , #image_caption, #image_title").map(&:text).map(&:strip)
-    # Save info to text file.
-    #CAPTIONS_FILE = File.open("captions.txt", "w")
-    #CAPTIONS_FILE.puts "#{photo_info}"
+    photo_info = a.page.search("#image_description, #image_caption, #image_title").map(&:text).map(&:strip)
 
+    open("captions.txt", "a") do |f|
+        f << photo_info
+        f.puts "\n"
+        f.puts "#{image_page}"
+        f.puts "\n"*2
+    end
 
     # Click largest image
     a.page.link_with(:href => /\-sxga.jpg/).click
@@ -57,5 +57,7 @@ a.page.search("td:nth-child(3) a").each do |link|
     # Change to Images Directory and download file
     Dir.chdir("images") do
         a.get(base_url+img_url).save
+        # Sleepy time for the request
+
     end
 end
