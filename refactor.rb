@@ -44,7 +44,7 @@ a.page.search("td:nth-child(3) a").each do |link|
     open("captions.txt", "a") do |f|
         f << photo_info
         f.puts "\n"
-        f.puts "#{image_page}"
+        f.puts "The file name is " + a.page.link_with(:href => /\-sxga.jpg/).text
         f.puts "\n"*2
     end
 
