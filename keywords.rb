@@ -39,15 +39,21 @@ a.page.links[0..302].each do |x|
         # Grab Descriptions, remove whitespace, store in variable photo_info and write to photo.txt
         photo_info = a.page.search("#image_description, #image_caption, #image_title").map(&:text).map(&:strip)
 
-        open("captions.txt", "a") do |f|
+        open("captions_keywords.txt", "a") do |f|
             f << photo_info
             f.puts "\n"
-            f.puts "The file name is " + a.page.link_with(:href => /\-sxga.jpg/).text
+            #f.puts "The file name is " + a.page.link_with(:href => /\-sxga.jpg/).text
             f.puts "\n"*2
         end
 
         # Click largest image
-        a.page.link_with(:href => /\-sxga.jpg/).click
+        begin
+            a.page.link_with(:href => /\-sxga.jpg/).click
+        rescue
+            puts "Could not grab photo..."
+        else
+            puts "photo downloaded"
+        end
 
         # Setting variables for download
         img_url = a.page.search("img")[0].attributes['src'].text
