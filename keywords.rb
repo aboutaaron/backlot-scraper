@@ -15,10 +15,12 @@ base_url = "http://laiac1b5z1-int.latimes.com"
 a = Mechanize.new
 
 # Login
+username = ""
+password = ""
 x = a.get(base_url).forms.first
 p "Submitting login info..."
-x["name"] = "jevon.phillips"
-x["password"] = "marvel"
+x["name"] = username
+x["password"] = password
 x.submit
 
 # open keyword section w/ appropriate parameters
@@ -34,7 +36,11 @@ a.page.links[0..302].each do |x|
         image_page = base_url + link['href']
         a.get(image_page)
         # Grab Descriptions, remove whitespace, store in variable photo_info and write to photo.txt
-        file_name = a.page.link_with(:href => /\-sxga.jpg/).text
+        begin
+            file_name = a.page.link_with(:href => /\-sxga.jpg/).text
+        rescue  StandardError => e
+            puts "Error: #{e}"
+        end
         photo_info = a.page.search("#image_description, #image_caption, #image_title").map(&:text).map(&:strip)
 
         open("captions_keywords.txt", "a") do |f|
@@ -82,8 +88,13 @@ a.page.links[0..302].each do |x|
         end
     end
 end
+
 exec "figlet 'Finished keywords'"
+
 puts
+
+a.get("http://laiac1b5z1-int.latimes.com/images?content_partial=global%2Fcontent_list&filter_by=title&filter_status=all&filter_val=&limit=1000&offset=20&search_published=false&sort_asc=desc&sort_by=modified")
+
 p "Opening up the 'Images' section with all images. This will take a while..."
 # URL with maximum photo size
 a.get("http://laiac1b5z1-int.latimes.com/images?content_partial=global%2Fcontent_list&filter_by=title&filter_status=all&filter_val=&limit=1000&offset=20&search_published=false&sort_asc=desc&sort_by=modified")
